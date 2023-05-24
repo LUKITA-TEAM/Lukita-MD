@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.primagiant.lukita'
+    namespace 'com.lukitateam.lukita'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.primagiant.lukita"
+        applicationId "com.lukitateam.lukita"
         minSdk 28
         targetSdk 33
         versionCode 1
