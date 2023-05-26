@@ -16,7 +16,9 @@ import com.lukitateam.lukita.ui.screen.home.HomeScreen
 import com.lukitateam.lukita.ui.screen.login.LoginScreen
 import com.lukitateam.lukita.ui.screen.register.RegisterScreen
 import com.lukitateam.lukita.ui.screen.splash.SplashScreen
-import com.lukitateam.lukita.ui.screen.welcome.WelcomeScreen
+import com.lukitateam.lukita.ui.screen.welcome.WelcomeScreen1
+import com.lukitateam.lukita.ui.screen.welcome.WelcomeScreen2
+import com.lukitateam.lukita.ui.screen.welcome.WelcomeScreen3
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,8 +52,14 @@ fun LukitaApp(
             composable(Screen.Register.route) {
                 RegisterScreen()
             }
-            composable(Screen.Welcome.route) {
-                WelcomeScreen()
+            composable(Screen.Welcome1.route) {
+                WelcomeScreen1()
+            }
+            composable(Screen.Welcome2.route) {
+                WelcomeScreen2()
+            }
+            composable(Screen.Welcome3.route) {
+                WelcomeScreen3()
             }
             composable(Screen.Home.route) {
                 HomeScreen()

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun WelcomeScreen(
+fun WelcomeScreen2(
     modifier: Modifier = Modifier,
 ) {
 

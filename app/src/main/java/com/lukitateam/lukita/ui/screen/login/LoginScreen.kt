@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -21,7 +20,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -88,13 +90,34 @@ fun LoginScreen(
             ),
             modifier = modifier
                 .fillMaxWidth()
-                .padding(32.dp, 16.dp, 32.dp, 16.dp),
+                .padding(32.dp, 16.dp, 32.dp, 8.dp),
         ) {
             Text(
                 "Login",
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Bold,
                 ),
+            )
+        }
+        Text(
+            text = "Dont Have an Account",
+            modifier = modifier.
+                    fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+        Box(
+            modifier = Modifier.fillMaxWidth(), Alignment.Center
+        ) {
+            ClickableText(
+                AnnotatedString(
+                    "Register",
+                ),
+                style = TextStyle.Default.copy(
+                    textDecoration = TextDecoration.Underline,
+                    fontWeight = FontWeight.Bold,
+                ),
+                onClick = { /*TODO (Go To Forgot Password)*/ },
+                modifier = modifier.padding(32.dp, 8.dp, 32.dp, 8.dp)
             )
         }
     }
