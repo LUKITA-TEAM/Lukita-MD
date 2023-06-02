@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "66376725342",
+    "project_id": "lukita-28a6b",
+    "storage_bucket": "lukita-28a6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66376725342:android:4070c19551e87cf26dd5cf",
+        "android_client_info": {
+          "package_name": "com.lukitateam.lukita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66376725342-skg90ilgggrglo774vh599d858fkcm2m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lukitateam.lukita",
+            "certificate_hash": "a5f382f4845014470b92ba5a4d6bfe4b48a34c77"
+          }
+        },
+        {
+          "client_id": "66376725342-mq5sggmltc8kdv9kkdr6scc7m51aq7au.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK4n8oPwUMmoE2KTVxx2BQQ3EICoC1GlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66376725342-mq5sggmltc8kdv9kkdr6scc7m51aq7au.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
