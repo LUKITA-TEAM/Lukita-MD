@@ -13,4 +13,7 @@ val styleArts = listOf(
     R.string.style_art_surrealism,
     R.string.style_art_history,
     R.string.style_art_abstract,
+    R.string.style_art_abstract,
+    R.string.style_art_abstract,
+    R.string.style_art_abstract,
 ).map { StyleArt(it) }

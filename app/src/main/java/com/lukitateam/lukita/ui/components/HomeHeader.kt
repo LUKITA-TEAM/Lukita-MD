@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,7 +34,7 @@ fun HomeHeader(
                 .fillMaxWidth()
                 .size(100.dp)
                 .background(Primary)
-                .padding(vertical = 4.dp, horizontal = 24.dp)
+                .padding(vertical = 4.dp, horizontal = 16.dp)
         ) {
             Column(
                 modifier = modifier
@@ -55,7 +56,7 @@ fun HomeHeader(
             Box(
                 modifier = modifier
                     .fillMaxWidth()
-                    .size(60.dp),
+                    .fillMaxHeight(),
                 contentAlignment = Alignment.BottomEnd
             ) {
                 Image(
