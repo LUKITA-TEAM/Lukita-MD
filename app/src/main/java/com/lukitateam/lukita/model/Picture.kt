@@ -1,10 +1,9 @@
 package com.lukitateam.lukita.model
 
-import androidx.annotation.DrawableRes
-import com.lukitateam.lukita.R
+import androidx.compose.ui.unit.Dp
 
-data class Photo(
-    val id: Int,
+data class Picture(
+    val id: String,
     val name: String,
     val styleArt: String,
     val photoUrl: String,
