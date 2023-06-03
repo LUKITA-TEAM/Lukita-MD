@@ -27,46 +27,51 @@ fun HomeHeader(
     username: String,
     drawable: Int,
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .size(70.dp)
-            .background(Primary)
-            .padding(vertical = 4.dp, horizontal = 24.dp)
-    ) {
-        Column(
-            modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Bottom,
-        ) {
-            Text(
-                text = "Hello, ",
-                color = Color.White,
-            )
-            Text(
-                text = username,
-                style = MaterialTheme.typography.headlineLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-            )
-        }
+    Column {
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .size(60.dp),
-            contentAlignment = Alignment.CenterEnd
+                .size(100.dp)
+                .background(Primary)
+                .padding(vertical = 4.dp, horizontal = 24.dp)
         ) {
-            Image(
-                painter = painterResource(R.drawable.logo_02),
-                contentDescription = stringResource(R.string.app_name),
-                modifier.size(60.dp),
-            )
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp),
+                verticalArrangement = Arrangement.Bottom,
+            ) {
+                Text(
+                    text = "Hello, ",
+                    color = Color.White,
+                )
+                Text(
+                    text = username,
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                )
+            }
+            Box(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .size(60.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.logo_02),
+                    contentDescription = stringResource(R.string.app_name),
+                    modifier = modifier.size(60.dp),
+                    alignment = Alignment.BottomEnd
+                )
+            }
         }
+        Image(
+            painter = painterResource(drawable),
+            contentDescription = stringResource(R.string.wave_desc),
+            modifier.fillMaxWidth()
+        )
     }
-    Image(
-        painter = painterResource(drawable),
-        contentDescription = stringResource(R.string.wave_desc),
-        modifier = modifier
-            .fillMaxWidth()
-    )
+
 }
 

@@ -4,4 +4,8 @@
     <string name="welcome_img">Image WelcomeScreen</string>
     <string name="welcome_header">Describe art style just with picture</string>
     <string name="welcome_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</string>
+    <string name="style_art_naturalism">Naturalism</string>
+    <string name="style_art_surrealism">Naturalism</string>
+    <string name="style_art_history">Naturalism</string>
+    <string name="style_art_abstract">Naturalism</string>
 </resources>
