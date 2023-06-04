@@ -4,11 +4,16 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +45,8 @@ import com.lukitateam.lukita.ui.components.textField.EmailTextField
 import com.lukitateam.lukita.ui.components.textField.PasswordTextField
 import com.lukitateam.lukita.ui.theme.LukitaTheme
 import com.lukitateam.lukita.ui.theme.Secondary
+import com.lukitateam.lukita.util.validateEmail
+import com.lukitateam.lukita.util.validatePassword
 import kotlinx.coroutines.launch
 
 @Composable
@@ -51,11 +58,17 @@ fun LoginScreen(
     var username by rememberSaveable {
         mutableStateOf("")
     }
+    var isEmailValid by remember {
+        mutableStateOf(true)
+    }
     var password by rememberSaveable {
         mutableStateOf("")
     }
     var showPassword by remember {
         mutableStateOf(false)
+    }
+    var isPasswordValid by remember {
+        mutableStateOf(true)
     }
 
     val scope = rememberCoroutineScope()
@@ -64,7 +77,9 @@ fun LoginScreen(
 
 
     Column(
-        modifier.fillMaxWidth()
+        modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
     ) {
         AuthHeader(
             "Login to continue", R.drawable.wave_01
@@ -73,11 +88,13 @@ fun LoginScreen(
             thickness = 16.dp, color = Color.Transparent
         )
         EmailTextField(
-            username, onValueChange = { text ->
+            username, isEmailValid, onValueChange = { text ->
+                isEmailValid = validateEmail(text)
                 username = text
             }, modifier.padding(32.dp, 8.dp, 32.dp, 0.dp)
         )
-        PasswordTextField(password, showPassword, onValueChange = { text ->
+        PasswordTextField(password, showPassword, isPasswordValid, onValueChange = { text ->
+            isPasswordValid = validatePassword(text)
             password = text
         }, onTrailingIconClicked = {
             showPassword = !showPassword
@@ -95,7 +112,15 @@ fun LoginScreen(
             )
         }
         Button(
-            onClick = {},
+            onClick = {
+                isEmailValid = validateEmail(username)
+                isPasswordValid = validatePassword(password)
+                if (validateBeforeSubmit(username, password)) {
+                    scope.launch {
+                        viewModel.loginUser(username, password)
+                    }
+                }
+            },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Secondary,
@@ -105,17 +130,22 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(32.dp, 16.dp, 32.dp, 8.dp),
         ) {
-            Text(
-                "Login",
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                ),
-            )
+            if (state.value?.isLoading == true) {
+                CircularProgressIndicator(
+                    modifier.width(14.dp).height(14.dp)
+                )
+            } else {
+                Text(
+                    "Login",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                    ),
+                )
+            }
         }
         Text(
             text = "Dont Have an Account",
-            modifier = modifier.
-                    fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
         Box(
@@ -129,7 +159,7 @@ fun LoginScreen(
                     textDecoration = TextDecoration.Underline,
                     fontWeight = FontWeight.Bold,
                 ),
-                onClick = { /*TODO (Go To Forgot Password)*/ },
+                onClick = { /*TODO (Go To Register)*/ },
                 modifier = modifier.padding(32.dp, 8.dp, 32.dp, 8.dp)
             )
         }
@@ -151,6 +181,13 @@ fun LoginScreen(
             }
         }
     }
+}
+
+private fun validateBeforeSubmit(email: String, password: String): Boolean {
+    if (validateEmail(email) && validatePassword(password)) {
+        return true
+    }
+    return false
 }
 
 @Composable

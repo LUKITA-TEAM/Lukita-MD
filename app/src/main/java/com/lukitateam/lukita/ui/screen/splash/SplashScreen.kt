@@ -16,7 +16,13 @@ import com.lukitateam.lukita.ui.theme.LukitaTheme
 
 @Composable
 fun SplashScreen(
-    modifier: Modifier = Modifier,
+) {
+    SplashScreenDesign()
+}
+
+@Composable
+fun SplashScreenDesign(
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
@@ -28,7 +34,7 @@ fun SplashScreen(
             modifier
                 .size(280.dp)
                 .align(Alignment.Center)
-            )
+        )
     }
 }
 
