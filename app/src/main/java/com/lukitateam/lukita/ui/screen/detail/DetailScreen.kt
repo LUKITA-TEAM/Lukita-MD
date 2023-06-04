@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lukitateam.lukita.R
 import com.lukitateam.lukita.ui.components.DefaultHeader
+import com.lukitateam.lukita.ui.components.GridHelper
 import com.lukitateam.lukita.ui.theme.LukitaTheme
 import com.lukitateam.lukita.ui.theme.Primary
 
@@ -85,7 +86,7 @@ fun Content(modifier: Modifier = Modifier) {
             text = stringResource(R.string.detail_desc),
             style = MaterialTheme.typography.bodyLarge,
             modifier = modifier
-                .padding(vertical = 32.dp, horizontal = 16.dp),
+                .padding(vertical = 32.dp, horizontal = 8.dp),
         )
         RelatedImage()
     }
@@ -97,7 +98,9 @@ fun RelatedImage(
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.padding(vertical = 8.dp)
+        modifier = modifier
+            .padding(vertical = 8.dp)
+            .fillMaxWidth()
     ) {
         Text(
             text = stringResource(R.string.related_img_header),
@@ -105,6 +108,7 @@ fun RelatedImage(
             modifier = modifier.padding(vertical = 8.dp),
         )
     }
+    GridHelper()
 }
 
 @Preview(showBackground = true)
