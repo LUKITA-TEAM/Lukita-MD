@@ -40,7 +40,7 @@ fun LukitaApp(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Login.route,
+            startDestination = Screen.Register.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Splash.route) {
