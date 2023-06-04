@@ -14,3 +14,10 @@ val Primary = Color(0xFF5B6F86)
 val Secondary = Color(0xFFCCD2D9)
 
 //Color Palette
+val UclaBlue100 = Color(0xFFEFF1F3)
+val UclaBlue500 = Color(0xFF5B6F86)
+
+val BrightGrey50 = Color(0xFFFDFDFD)
+val BrightGrey500 = Color(0xFFEEEEEE)
+
+

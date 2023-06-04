@@ -35,7 +35,7 @@ fun WelcomeScreen2(
             ) {
                 Image(
                     painter = painterResource(R.drawable.wave_ws_2_above),
-                    contentDescription = stringResource(id = R.string.welcome_wave),
+                    contentDescription = stringResource(id = R.string.wave_desc),
                     alignment = Alignment.TopEnd
                 )
             }
@@ -46,7 +46,7 @@ fun WelcomeScreen2(
             ) {
                 Image(
                     painter = painterResource(R.drawable.wave_ws_2_bottom),
-                    contentDescription = stringResource(R.string.welcome_wave)
+                    contentDescription = stringResource(R.string.wave_desc)
                 )
             }
         }
