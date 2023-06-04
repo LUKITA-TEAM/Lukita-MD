@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.lukitateam.lukita.R
 import com.lukitateam.lukita.model.DummyPicture
 import com.lukitateam.lukita.model.styleArts
+import com.lukitateam.lukita.ui.components.GridHelper
 import com.lukitateam.lukita.ui.components.HomeHeader
 import com.lukitateam.lukita.ui.components.ListRecommendation
 import com.lukitateam.lukita.ui.components.PhotoItem
@@ -70,7 +71,7 @@ fun Dashboard(
         }
     }
 //    PhotoGrid()
-    ColorGridExample()
+    GridHelper()
 }
 
 /*Bug! Foto tidak mau tampil*/
@@ -98,45 +99,6 @@ fun Dashboard(
 //    }
 //}
 
-
-val items = (1..100).map {
-    ListItem(
-        height = Random.nextInt(100, 300).dp,
-        color = Color(
-            Random.nextLong(0xFFFFFFFF)
-        ).copy(alpha = 1f)
-    )
-}
-@Composable
-fun ColorGridExample() {
-    LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Adaptive(128.dp),
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(items) { item ->
-            RandomColorBox(item = item)
-        }
-    }
-}
-
-data class ListItem(
-    val height: Dp,
-    val color: Color,
-)
-
-@Composable
-fun RandomColorBox(item: ListItem) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(item.height)
-            .clip(RoundedCornerShape(10.dp))
-            .background(item.color)
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
