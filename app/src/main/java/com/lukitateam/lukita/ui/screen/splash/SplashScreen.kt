@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.lukitateam.lukita.R
 import com.lukitateam.lukita.ui.navigation.Screen
@@ -24,21 +25,29 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: SplashViewModel = hiltViewModel()
 ) {
     var animationStart by remember {
         mutableStateOf(false)
     }
     val animation = animateFloatAsState(
         targetValue = if (animationStart) 1f else 0f,
-        animationSpec = tween(3000)
+        animationSpec = tween(2500)
     )
 
     LaunchedEffect(key1 = true) {
         animationStart = true
-        delay(4000)
+        delay(3000)
         navController.popBackStack()
-        navController.navigate(Screen.Login.route)
+        viewModel.getSession().collect { user ->
+            if (user != "") {
+                navController.navigate(Screen.Home.route)
+            } else {
+                navController.navigate(Screen.Login.route)
+
+            }
+        }
     }
     SplashScreenDesign(animation.value)
 }
