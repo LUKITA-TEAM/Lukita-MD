@@ -8,3 +8,6 @@ fun validateEmail(text: String): Boolean {
 fun validatePassword(text : String) : Boolean {
     return text.length >= 8
 }
+fun comparingPassword(old : String, text : String) : Boolean {
+    return old == text
+}

@@ -32,6 +32,7 @@ import com.lukitateam.lukita.ui.theme.UclaBlue100
 @Composable
 fun DefaultHeader(
     textHeader: String,
+    color: Color,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -57,6 +58,8 @@ fun DefaultHeader(
             text = textHeader,
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
+            color = color,
+
         )
     }
 }
@@ -65,6 +68,9 @@ fun DefaultHeader(
 @Composable
 fun DefaultHeaderPreview() {
     LukitaTheme {
-        DefaultHeader("Detail")
+        DefaultHeader(
+            "Detail",
+            Color.White
+        )
     }
 }

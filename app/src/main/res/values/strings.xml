@@ -2,6 +2,13 @@
     <string name="app_name">Lukita</string>
     <string name="wave_desc">Wave</string>
     <string name="welcome_img">Image WelcomeScreen</string>
+    <string name="name_example">John Bordon</string>
+    <string name="identity">Identity</string>
+    <string name="change_password">Change Password</string>
+    <string name="password">Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="welcome_header">Describe art style just with picture</string>
     <string name="welcome_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</string>
     <string name="detail_desc">
@@ -15,5 +22,6 @@
     <string name="style_art_history">Naturalism</string>
     <string name="style_art_abstract">Naturalism</string>
     <string name="detail_header">Detail</string>
+    <string name="profile_header">Profile</string>
     <string name="v_desc_arrow_back">Back</string>
 </resources>

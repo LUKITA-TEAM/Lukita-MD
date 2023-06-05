@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.errorprone.annotations.InlineMeValidationDisabled
 import com.lukitateam.lukita.ui.theme.LukitaTheme
 import com.lukitateam.lukita.util.validateEmail
 
@@ -28,6 +29,7 @@ fun EmailTextField(
     valid: Boolean,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    readOnly: Boolean = false,
 ) {
     Column {
 
@@ -37,9 +39,11 @@ fun EmailTextField(
                 keyboardType = KeyboardType.Email
             ),
             onValueChange = { text ->
-                onValueChange(text)
+                onValueChange(text.trim())
             },
+            readOnly = readOnly,
             singleLine = true,
+            maxLines = 1,
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Outlined.Email, contentDescription = "Email Icon"
@@ -56,7 +60,7 @@ fun EmailTextField(
             Text(
                 text = "Please fill the right email",
                 color = Color.Red,
-                fontSize = 10.sp,
+                fontSize = 12.sp,
                 textAlign = TextAlign.End,
                 modifier = modifier.fillMaxWidth()
                     .padding(4.dp),

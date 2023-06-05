@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -93,7 +94,8 @@ fun LoginScreen(
                 username = text
             }, modifier.padding(32.dp, 8.dp, 32.dp, 0.dp)
         )
-        PasswordTextField(password, showPassword, isPasswordValid, onValueChange = { text ->
+        PasswordTextField(
+            stringResource(R.string.password), password, showPassword, isPasswordValid, onValueChange = { text ->
             isPasswordValid = validatePassword(text)
             password = text
         }, onTrailingIconClicked = {
@@ -132,7 +134,9 @@ fun LoginScreen(
         ) {
             if (state.value?.isLoading == true) {
                 CircularProgressIndicator(
-                    modifier.width(14.dp).height(14.dp)
+                    modifier
+                        .width(14.dp)
+                        .height(14.dp)
                 )
             } else {
                 Text(

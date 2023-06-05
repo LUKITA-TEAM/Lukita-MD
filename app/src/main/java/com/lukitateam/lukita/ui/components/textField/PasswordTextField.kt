@@ -26,6 +26,7 @@ import com.lukitateam.lukita.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordTextField(
+    placeholder: String,
     password: String,
     showPassword: Boolean,
     valid: Boolean,
@@ -64,7 +65,7 @@ fun PasswordTextField(
                 }
             },
             label = {
-                Text("Password")
+                Text(text = placeholder)
             },
             singleLine = true,
             modifier = modifier
@@ -75,7 +76,7 @@ fun PasswordTextField(
             Text(
                 text = "Password must contain at lease 8 character",
                 color = Color.Red,
-                fontSize = 10.sp,
+                fontSize = 12.sp,
                 textAlign = TextAlign.End,
                 modifier = modifier
                     .fillMaxWidth()

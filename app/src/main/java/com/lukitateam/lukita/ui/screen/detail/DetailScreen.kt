@@ -37,7 +37,10 @@ fun DetailScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        DefaultHeader(stringResource(R.string.detail_header))
+        DefaultHeader(
+            stringResource(R.string.detail_header),
+            Color.Black
+        )
         Content(modifier = modifier.padding(top = 8.dp))
     }
 }
