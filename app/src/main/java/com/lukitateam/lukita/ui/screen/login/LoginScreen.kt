@@ -35,15 +35,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.lukitateam.lukita.R
 import com.lukitateam.lukita.ui.components.AuthHeader
 import com.lukitateam.lukita.ui.components.textField.EmailTextField
 import com.lukitateam.lukita.ui.components.textField.PasswordTextField
-import com.lukitateam.lukita.ui.theme.LukitaTheme
+import com.lukitateam.lukita.ui.navigation.Screen
 import com.lukitateam.lukita.ui.theme.Secondary
 import com.lukitateam.lukita.util.validateEmail
 import com.lukitateam.lukita.util.validatePassword
@@ -51,6 +51,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
@@ -118,6 +119,19 @@ fun LoginScreen(
                 if (validateBeforeSubmit(username, password)) {
                     scope.launch {
                         viewModel.loginUser(username, password)
+                        viewModel.getSession().collect { user ->
+                            if (user != "") {
+                                navController.popBackStack()
+                                navController.navigate(Screen.Home.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+                        }
+
                     }
                 }
             },
@@ -132,7 +146,9 @@ fun LoginScreen(
         ) {
             if (state.value?.isLoading == true) {
                 CircularProgressIndicator(
-                    modifier.width(14.dp).height(14.dp)
+                    modifier
+                        .width(14.dp)
+                        .height(14.dp)
                 )
             } else {
                 Text(
@@ -159,7 +175,9 @@ fun LoginScreen(
                     textDecoration = TextDecoration.Underline,
                     fontWeight = FontWeight.Bold,
                 ),
-                onClick = { /*TODO (Go To Register)*/ },
+                onClick = {
+                    navController.navigate(Screen.Register.route)
+                },
                 modifier = modifier.padding(32.dp, 8.dp, 32.dp, 8.dp)
             )
         }
@@ -188,12 +206,4 @@ private fun validateBeforeSubmit(email: String, password: String): Boolean {
         return true
     }
     return false
-}
-
-@Composable
-@Preview(showBackground = true, device = Devices.PIXEL_4)
-fun LoginScreenPreview() {
-    LukitaTheme {
-        LoginScreen()
-    }
 }
