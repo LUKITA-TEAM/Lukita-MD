@@ -24,4 +24,7 @@
     <string name="detail_header">Detail</string>
     <string name="profile_header">Profile</string>
     <string name="v_desc_arrow_back">Back</string>
+    <string name="save">Save</string>
+    <string name="logout">Logout</string>
+    <string name="example_img">https://storage.googleapis.com/dataset-lukita/Abstract/04-women-expressionism-1349283850.JPG</string>
 </resources>

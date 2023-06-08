@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,12 +32,24 @@ import com.lukitateam.lukita.ui.components.textField.EmailTextField
 import com.lukitateam.lukita.ui.components.textField.PasswordTextField
 import com.lukitateam.lukita.ui.theme.LukitaTheme
 import com.lukitateam.lukita.ui.theme.Primary
+import com.lukitateam.lukita.ui.theme.Secondary
 import com.lukitateam.lukita.util.comparingPassword
 import com.lukitateam.lukita.util.validatePassword
 
 @Composable
 fun ProfileScreen() {
-    ProfileHeader(drawable = R.drawable.wave_ps_above)
+    Column {
+        ProfileHeader(drawable = R.drawable.wave_ps_above)
+        FormField(
+            identityField = stringResource(R.string.identity),
+            changePasswordField = stringResource(R.string.change_password),
+        )
+        ButtonProfile(
+            textSave = stringResource(R.string.save),
+            textLogout = stringResource(R.string.logout),
+        )
+        ProfileFooter(drawable = R.drawable.wave_ps_bottom)
+    }
 }
 
 @Composable
@@ -59,15 +75,11 @@ fun ProfileHeader(
             contentDescription = stringResource(R.string.wave_desc),
             modifier = modifier.padding(bottom = 16.dp),
         )
-        Identity(
-            identityField = stringResource(R.string.identity),
-            changePasswordField = stringResource(R.string.change_password)
-        )
     }
 }
 
 @Composable
-fun Identity(
+fun FormField(
     identityField: String,
     changePasswordField: String,
     modifier: Modifier = Modifier
@@ -94,6 +106,7 @@ fun Identity(
         mutableStateOf(true)
     }
 
+    // TODO("Logic Changes Password")
     Column(
         modifier = modifier.padding(horizontal = 24.dp, vertical = 24.dp)
     ) {
@@ -154,6 +167,79 @@ fun Identity(
                 showPassword =! showPassword
             }
         )
+    }
+}
+
+@Composable
+fun ButtonProfile(
+    textSave: String,
+    textLogout: String,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier.padding(start = 24.dp, end = 24.dp, top = 48.dp, bottom = 8.dp)) {
+        Button(
+            onClick = { TODO("Logic Save Changes Password") },
+            shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Primary,
+                contentColor = Color.White,
+            ),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+        ){
+            Text(
+                text = textSave,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                ),
+            )
+
+        }
+        Button(
+            onClick = { TODO("Logic Logout") },
+            shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Secondary,
+                contentColor = Color.Black,
+            ),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+        ){
+            Text(
+                text = textLogout,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                ),
+            )
+
+        }
+
+    }
+}
+
+@Composable
+fun ProfileFooter(
+    drawable: Int,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Column {
+            Image(
+                painter = painterResource(drawable),
+                contentDescription = stringResource(R.string.wave_desc),
+            )
+            Box(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .size(50.dp)
+                    .background(Primary)
+            )
+        }
     }
 }
 
