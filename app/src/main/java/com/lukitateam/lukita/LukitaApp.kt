@@ -35,22 +35,27 @@ fun LukitaApp(
             /* if (currentRoute != Screen.DetailItem.route) {
                 BottomBar(navController)
             } */
-        },
-        modifier = modifier
+        }, modifier = modifier
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Register.route,
+            startDestination = Screen.Splash.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Splash.route) {
-                SplashScreen()
+                SplashScreen(
+                    navController
+                )
             }
             composable(Screen.Login.route) {
-                LoginScreen()
+                LoginScreen(
+                    navController
+                )
             }
             composable(Screen.Register.route) {
-                RegisterScreen()
+                RegisterScreen(
+                    navController
+                )
             }
             composable(Screen.Welcome1.route) {
                 WelcomeScreen1()
