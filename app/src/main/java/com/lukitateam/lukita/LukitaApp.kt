@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.lukitateam.lukita.ui.components.BottomNavigationBar
 import com.lukitateam.lukita.ui.navigation.Screen
 import com.lukitateam.lukita.ui.screen.home.HomeScreen
 import com.lukitateam.lukita.ui.screen.login.LoginScreen
@@ -32,9 +33,12 @@ fun LukitaApp(
     Scaffold(
         bottomBar = {
             // jika route tidak menggunakan bottom bar matikan disini
-            /* if (currentRoute != Screen.DetailItem.route) {
-                BottomBar(navController)
-            } */
+            when (currentRoute) {
+                (Screen.Splash.route) -> {}
+                else -> {
+                    BottomNavigationBar()
+                }
+            }
         }, modifier = modifier
     ) { innerPadding ->
         NavHost(
