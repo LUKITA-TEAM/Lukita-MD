@@ -3,7 +3,6 @@ package com.lukitateam.lukita.di
 import com.google.firebase.auth.FirebaseAuth
 import com.lukitateam.lukita.data.AuthRepository
 import com.lukitateam.lukita.data.AuthRepositoryImpl
-import com.lukitateam.lukita.data.datastore.SessionDatastore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

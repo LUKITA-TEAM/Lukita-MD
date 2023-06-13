@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lukitateam.lukita.R
 import com.lukitateam.lukita.ui.components.DefaultHeader
-import com.lukitateam.lukita.ui.components.GridHelper
 import com.lukitateam.lukita.ui.theme.LukitaTheme
 import com.lukitateam.lukita.ui.theme.Primary
 
@@ -111,7 +110,6 @@ fun RelatedImage(
             modifier = modifier.padding(vertical = 8.dp),
         )
     }
-    GridHelper()
 }
 
 @Preview(showBackground = true)
