@@ -11,7 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.lukitateam.lukita.ui.components.BottomNavigationBar
+import com.lukitateam.lukita.ui.components.navigationBar.BottomNavigationBar
 import com.lukitateam.lukita.ui.navigation.Screen
 import com.lukitateam.lukita.ui.screen.home.HomeScreen
 import com.lukitateam.lukita.ui.screen.login.LoginScreen

@@ -1,4 +1,4 @@
-package com.lukitateam.lukita.ui.components
+package com.lukitateam.lukita.ui.components.navigationBar
 
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
