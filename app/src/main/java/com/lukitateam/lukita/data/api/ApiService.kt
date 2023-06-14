@@ -15,7 +15,7 @@ interface ApiService {
     @POST("/")
     suspend fun predict(
         @Part file: MultipartBody.Part
-    ): ArtResponse
+    ): Response<ArtResponse>
 
     @GET("/galeri")
     suspend fun gallery(): Response<List<GalleryResponse>>

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.lukitateam.lukita.data.api.ApiConfig
 import com.lukitateam.lukita.data.response.GalleryResponse
 import com.lukitateam.lukita.ui.common.UiState
-import com.lukitateam.lukita.ui.screen.login.LoginState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 

@@ -15,12 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.errorprone.annotations.InlineMeValidationDisabled
-import com.lukitateam.lukita.ui.theme.LukitaTheme
-import com.lukitateam.lukita.util.validateEmail
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +58,8 @@ fun EmailTextField(
                 color = Color.Red,
                 fontSize = 12.sp,
                 textAlign = TextAlign.End,
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier
+                    .fillMaxWidth()
                     .padding(4.dp),
             )
         }
