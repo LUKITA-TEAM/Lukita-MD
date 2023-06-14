@@ -1,5 +1,6 @@
 package com.lukitateam.lukita.ui.components.navigationBar
 
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
@@ -23,12 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.lukitateam.lukita.R
+import com.lukitateam.lukita.ui.navigation.Screen
 
 enum class MultiFloatingState {
     Expanded,
@@ -38,6 +42,7 @@ enum class MultiFloatingState {
 @Composable
 fun MultiFloatingButton(
     multiFloatingState: MultiFloatingState,
+    navController: NavController,
     onMultiFabStateChange: (MultiFloatingState) -> Unit,
     items: List<MinFabItem>
 ) {
@@ -53,11 +58,20 @@ fun MultiFloatingButton(
         horizontalAlignment = Alignment.End
     ) {
         if (transition.currentState == MultiFloatingState.Expanded) {
-            items.forEach {
+            items.forEach { item ->
                 MinFab(
-                    item = it,
-                    text = it.label,
+                    item = item,
+                    text = item.label,
                     onMinFabItemClick = {
+                        when(item.label) {
+                            "Camera" -> {
+                                navController.navigate(Screen.Camera.route)
+                            }
+                            "Gallery" -> {
+                                // TODO (INTENT TO GALERY)
+                            }
+                            else -> {}
+                        }
 
                     }
                 )
