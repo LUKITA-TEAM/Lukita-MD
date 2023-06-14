@@ -1,6 +1,7 @@
 package com.lukitateam.lukita.ui.screen.home
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -75,6 +76,7 @@ fun HomeScreen(
 
             is UiState.Error -> {
                 val errorMessage = response.errorMessage
+                Log.e("Home Screen", errorMessage)
             }
 
             UiState.Loading -> {
