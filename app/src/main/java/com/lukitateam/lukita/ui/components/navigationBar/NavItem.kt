@@ -19,7 +19,7 @@ fun NavItem(
 ) {
     val iconId = if (isSelected) item.selectedIconId else item.unselectedIconId
     val iconAlpha = if (isSelected) 1f else 0.5f
-    IconButton(onClick = { onClick }) {
+    IconButton(onClick = { onClick() }) {
         Icon(
             painter = painterResource(id = iconId),
             contentDescription = item.title,

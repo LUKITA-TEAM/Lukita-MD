@@ -46,35 +46,43 @@ fun LukitaApp(
     )
 
     Scaffold(
-//        floatingActionButton = {
-//            when (currentRoute) {
-//                (Screen.Splash.route) -> {}
-//                else -> {
-//                    MultiFloatingButton(
-//                        multiFloatingState = multiFloatingState,
-//                        onMultiFabStateChange = {
-//                            multiFloatingState = it
-//                        },
-//                        items = items
-//                    )
-//                }
-//            }
-//        },
-//        bottomBar = {
-//            // jika route tidak menggunakan bottom bar matikan disini
-//            when (currentRoute) {
-//                (Screen.Splash.route) -> {}
-//                else -> {
-//                    BottomNav()
-//                }
-//            }
-//        },
+        floatingActionButton = {
+            when (currentRoute) {
+                (Screen.Splash.route) -> {}
+                (Screen.Login.route) -> {}
+                (Screen.Register.route) -> {}
+                (Screen.Profile.route) -> {}
+                (Screen.Detail.route) -> {}
+                else -> {
+                    MultiFloatingButton(
+                        multiFloatingState = multiFloatingState,
+                        onMultiFabStateChange = {
+                            multiFloatingState = it
+                        },
+                        items = items
+                    )
+                }
+            }
+        },
+        bottomBar = {
+            // jika route tidak menggunakan bottom bar matikan disini
+            when (currentRoute) {
+                (Screen.Splash.route) -> {}
+                (Screen.Login.route) -> {}
+                (Screen.Register.route) -> {}
+                (Screen.Profile.route) -> {}
+                (Screen.Detail.route) -> {}
+                else -> {
+                    BottomNav(navController)
+                }
+            }
+        },
         modifier = modifier
     ) { innerPadding ->
 
         NavigationHost(
             navController = navController,
-            startDestination = Screen.Camera.route,
+            startDestination = Screen.Splash.route,
             innerPadding = innerPadding,
         )
 
