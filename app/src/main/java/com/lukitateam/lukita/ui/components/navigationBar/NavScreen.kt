@@ -11,5 +11,5 @@ sealed class NavScreen(
 ) {
     object Home: NavScreen(id = 0, title = "Home", selectedIconId = R.drawable.baseline_home, unselectedIconId = R.drawable.baseline_home)
     object Profile: NavScreen(id = 1, title = "Profile", selectedIconId = R.drawable.baseline_settings, unselectedIconId = R.drawable.baseline_settings)
-    object MyImg: NavScreen(id = 1, title = "My Image", selectedIconId = R.drawable.baseline_photo_library, unselectedIconId = R.drawable.baseline_photo_library)
+    object MyImg: NavScreen(id = 2, title = "My Image", selectedIconId = R.drawable.baseline_photo_library, unselectedIconId = R.drawable.baseline_photo_library)
 }

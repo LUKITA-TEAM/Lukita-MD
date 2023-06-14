@@ -7,15 +7,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -23,22 +27,33 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.lukitateam.lukita.R
 import com.lukitateam.lukita.ui.components.DefaultHeader
 import com.lukitateam.lukita.ui.components.textField.EmailTextField
 import com.lukitateam.lukita.ui.components.textField.PasswordTextField
-import com.lukitateam.lukita.ui.theme.LukitaTheme
+import com.lukitateam.lukita.ui.navigation.Screen
 import com.lukitateam.lukita.ui.theme.Primary
 import com.lukitateam.lukita.ui.theme.Secondary
 import com.lukitateam.lukita.util.comparingPassword
 import com.lukitateam.lukita.util.validatePassword
+import kotlinx.coroutines.launch
 
 @Composable
-fun ProfileScreen() {
-    Column {
+fun ProfileScreen(
+    viewModel: ProfileViewModel = hiltViewModel(),
+    navController: NavController,
+) {
+
+    val scope = rememberCoroutineScope()
+    val state = viewModel.profileState.collectAsState(initial = null)
+
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
         ProfileHeader(drawable = R.drawable.wave_ps_above)
         FormField(
             identityField = stringResource(R.string.identity),
@@ -47,15 +62,31 @@ fun ProfileScreen() {
         ButtonProfile(
             textSave = stringResource(R.string.save),
             textLogout = stringResource(R.string.logout),
+            onClickSave = {
+
+            },
+            onClickLogout = {
+                scope.launch {
+                    viewModel.logout()
+                    navController.popBackStack()
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            }
         )
-        ProfileFooter(drawable = R.drawable.wave_ps_bottom)
+//        ProfileFooter(drawable = R.drawable.wave_ps_bottom)
     }
 }
 
 @Composable
 fun ProfileHeader(
     drawable: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column {
         Box(
@@ -82,7 +113,7 @@ fun ProfileHeader(
 fun FormField(
     identityField: String,
     changePasswordField: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var email by rememberSaveable {
         mutableStateOf("")
@@ -151,7 +182,7 @@ fun FormField(
                 isPasswordValid = validatePassword(text)
             },
             onTrailingIconClicked = {
-                showPassword =! showPassword
+                showPassword = !showPassword
             }
         )
         PasswordTextField(
@@ -164,7 +195,7 @@ fun FormField(
                 confirmPassword = text
             },
             onTrailingIconClicked = {
-                showPassword =! showPassword
+                showPassword = !showPassword
             }
         )
     }
@@ -174,11 +205,15 @@ fun FormField(
 fun ButtonProfile(
     textSave: String,
     textLogout: String,
-    modifier: Modifier = Modifier
+    onClickSave: () -> Unit,
+    onClickLogout: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.padding(start = 24.dp, end = 24.dp, top = 48.dp, bottom = 8.dp)) {
         Button(
-            onClick = { TODO("Logic Save Changes Password") },
+            onClick = {
+                onClickSave()
+            },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Primary,
@@ -187,7 +222,7 @@ fun ButtonProfile(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(vertical = 4.dp),
-        ){
+        ) {
             Text(
                 text = textSave,
                 style = MaterialTheme.typography.bodyMedium.copy(
@@ -197,7 +232,9 @@ fun ButtonProfile(
 
         }
         Button(
-            onClick = { TODO("Logic Logout") },
+            onClick = {
+                onClickLogout()
+            },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Secondary,
@@ -206,7 +243,7 @@ fun ButtonProfile(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(vertical = 4.dp),
-        ){
+        ) {
             Text(
                 text = textLogout,
                 style = MaterialTheme.typography.bodyMedium.copy(
@@ -222,7 +259,7 @@ fun ButtonProfile(
 @Composable
 fun ProfileFooter(
     drawable: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
@@ -240,13 +277,5 @@ fun ProfileFooter(
                     .background(Primary)
             )
         }
-    }
-}
-
-@Preview(showBackground = true, device = Devices.PIXEL_4)
-@Composable
-fun ProfileScreenPreview() {
-    LukitaTheme {
-        ProfileScreen()
     }
 }

@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.lukitateam.lukita.ui.screen.home.HomeScreen
 import com.lukitateam.lukita.ui.screen.login.LoginScreen
+import com.lukitateam.lukita.ui.screen.profile.ProfileScreen
 import com.lukitateam.lukita.ui.screen.register.RegisterScreen
 import com.lukitateam.lukita.ui.screen.splash.SplashScreen
 import com.lukitateam.lukita.ui.screen.welcome.WelcomeScreen1
@@ -57,6 +58,9 @@ fun NavigationHost(
         }
         composable(Screen.Camera.route) {
             CameraScreen()
+        }
+        composable(Screen.Profile.route) {
+            ProfileScreen(navController = navController)
         }
     }
 }
