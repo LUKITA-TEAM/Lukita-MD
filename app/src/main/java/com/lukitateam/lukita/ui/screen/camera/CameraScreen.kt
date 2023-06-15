@@ -52,6 +52,7 @@ import com.lukitateam.lukita.ui.common.UiState
 import com.lukitateam.lukita.ui.screen.camera.CameraViewModel
 import com.lukitateam.lukita.util.createFile
 import com.lukitateam.lukita.util.reduceFileImage
+import com.lukitateam.lukita.util.rotateFile
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -97,6 +98,7 @@ fun CameraScreen(
         CameraView(
             executor = cameraExecutor,
             onImageCaptured = { file ->
+                rotateFile(file, true)
                 val reducedFile = reduceFileImage(file)
                 val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                     "file",
@@ -106,12 +108,17 @@ fun CameraScreen(
 
                 scope.launch {
                     prediction = viewModel.predict(imageMultipart)
+                    Log.d("file", file.path)
 
                     when (val response = prediction) {
                         is UiState.Success -> {
                             navController.currentBackStackEntry?.savedStateHandle?.set(
                                 key = "artResponse",
                                 value = response.data
+                            )
+                            navController.currentBackStackEntry?.savedStateHandle?.set(
+                                key = "file",
+                                value = file.path
                             )
                             isResponseSuccess = true
                         }
