@@ -1,17 +1,20 @@
 package com.lukitateam.lukita.ui.screen.detail
 
-import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.lukitateam.lukita.R
 import com.lukitateam.lukita.data.response.ArtResponse
 import com.lukitateam.lukita.ui.components.DefaultHeader
+import com.lukitateam.lukita.ui.components.PhotoItem
 import com.lukitateam.lukita.ui.theme.Primary
 
 @Composable
@@ -40,9 +44,7 @@ fun DetailScreen(
 ) {
 
     Column(
-        modifier.fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         DefaultHeader(
             navigateBack = {
@@ -51,7 +53,8 @@ fun DetailScreen(
             stringResource(R.string.detail_header),
             Color.Black
         )
-        Content(modifier = modifier.padding(top = 8.dp), sharedState)
+        Content(sharedState = sharedState)
+        RelatedImage(listImage = sharedState.relatedImage)
     }
 }
 
@@ -60,15 +63,15 @@ fun Content(
     modifier: Modifier = Modifier,
     sharedState: ArtResponse,
 ) {
-    Log.d("Detail", sharedState.prediction)
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .height(450.dp)
     ) {
         Box(
+            contentAlignment = Alignment.BottomCenter,
             modifier = modifier
                 .width(360.dp)
-                .height(380.dp),
-            contentAlignment = Alignment.TopCenter
         ) {
             Image(
                 painter = painterResource(R.drawable.example_image1),
@@ -76,45 +79,45 @@ fun Content(
                 contentScale = ContentScale.Crop,
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(350.dp)
+                    .height(360.dp)
                     .clip(RoundedCornerShape(20.dp)),
             )
             Box(
+                contentAlignment = Alignment.Center,
                 modifier = modifier
-                    .fillMaxHeight()
-                    .clip(RoundedCornerShape(8.dp)),
-                contentAlignment = Alignment.BottomCenter
+                    .width(275.dp)
+                    .padding(bottom = 8.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Primary)
             ) {
+
                 Text(
                     text = sharedState.prediction,
-                    style = MaterialTheme.typography.headlineMedium,
+                    style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     textAlign = TextAlign.Center,
-
                     modifier = modifier
-                        .width(275.dp)
-                        .height(55.dp)
-                        .background(Primary)
-                    )
+                        .padding(vertical = 8.dp)
+                )
             }
         }
         Text(
             text = sharedState.explanation,
             style = MaterialTheme.typography.bodyLarge,
             modifier = modifier
-                .padding(vertical = 32.dp, horizontal = 16.dp),
+                .verticalScroll(rememberScrollState())
+                .padding(vertical = 16.dp, horizontal = 16.dp),
         )
-        RelatedImage()
     }
 }
 
 @Composable
 fun RelatedImage(
     modifier: Modifier = Modifier,
+    listImage: List<String>,
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
+    Column(
         modifier = modifier
             .padding(vertical = 8.dp)
             .fillMaxWidth()
@@ -122,7 +125,32 @@ fun RelatedImage(
         Text(
             text = stringResource(R.string.related_img_header),
             textAlign = TextAlign.Center,
-            modifier = modifier.padding(vertical = 8.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
         )
+
+        PhotoGrid(data = listImage)
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun PhotoGrid(
+    data: List<String>,
+    modifier: Modifier = Modifier,
+) {
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(2),
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(data) { img ->
+            PhotoItem(
+                type = "", photoUrl = img
+            )
+        }
     }
 }
