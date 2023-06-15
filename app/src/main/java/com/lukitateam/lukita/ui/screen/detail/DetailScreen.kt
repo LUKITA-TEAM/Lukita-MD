@@ -37,7 +37,6 @@ import com.lukitateam.lukita.ui.theme.Primary
 
 @Composable
 fun DetailScreen(
-    modifier: Modifier = Modifier,
     sharedState: ArtResponse,
     filepath: String,
     navigateBack: () -> Unit,
@@ -139,7 +138,6 @@ fun RelatedImage(
 @Composable
 fun PhotoGrid(
     data: List<String>,
-    modifier: Modifier = Modifier,
 ) {
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(2),
