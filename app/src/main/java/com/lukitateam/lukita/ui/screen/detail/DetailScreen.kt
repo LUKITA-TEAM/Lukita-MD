@@ -1,5 +1,6 @@
 package com.lukitateam.lukita.ui.screen.detail
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -22,30 +23,39 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lukitateam.lukita.R
+import com.lukitateam.lukita.data.response.ArtResponse
 import com.lukitateam.lukita.ui.components.DefaultHeader
-import com.lukitateam.lukita.ui.theme.LukitaTheme
 import com.lukitateam.lukita.ui.theme.Primary
 
 @Composable
 fun DetailScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    sharedState: ArtResponse,
+    navigateBack: () -> Unit,
 ) {
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         DefaultHeader(
+            navigateBack = {
+                navigateBack()
+            },
             stringResource(R.string.detail_header),
             Color.Black
         )
-        Content(modifier = modifier.padding(top = 8.dp))
+        Content(modifier = modifier.padding(top = 8.dp), sharedState)
     }
 }
 
 @Composable
-fun Content(modifier: Modifier = Modifier) {
+fun Content(
+    modifier: Modifier = Modifier,
+    sharedState: ArtResponse,
+) {
+    Log.d("Detail", sharedState.prediction)
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -57,7 +67,7 @@ fun Content(modifier: Modifier = Modifier) {
         ) {
             Image(
                 painter = painterResource(R.drawable.example_image1),
-                contentDescription = stringResource(R.string.style_art_naturalism),
+                contentDescription = sharedState.prediction,
                 contentScale = ContentScale.Crop,
                 modifier = modifier
                     .fillMaxWidth()
@@ -70,7 +80,7 @@ fun Content(modifier: Modifier = Modifier) {
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Text(
-                    text = stringResource(R.string.style_art_naturalism),
+                    text = sharedState.prediction,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -85,7 +95,7 @@ fun Content(modifier: Modifier = Modifier) {
             }
         }
         Text(
-            text = stringResource(R.string.detail_desc),
+            text = sharedState.explanation,
             style = MaterialTheme.typography.bodyLarge,
             modifier = modifier
                 .padding(vertical = 32.dp, horizontal = 8.dp),
@@ -96,7 +106,7 @@ fun Content(modifier: Modifier = Modifier) {
 
 @Composable
 fun RelatedImage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -109,21 +119,5 @@ fun RelatedImage(
             textAlign = TextAlign.Center,
             modifier = modifier.padding(vertical = 8.dp),
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DetailScreenPreview() {
-    LukitaTheme {
-        DetailScreen()
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ContentPreview() {
-    LukitaTheme {
-        Content()
     }
 }

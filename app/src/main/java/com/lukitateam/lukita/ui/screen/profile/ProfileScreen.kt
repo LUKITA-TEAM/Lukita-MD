@@ -44,17 +44,22 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileScreen(
+    navigateBack: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel(),
     navController: NavController,
 ) {
-
     val scope = rememberCoroutineScope()
     val state = viewModel.profileState.collectAsState(initial = null)
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
-        ProfileHeader(drawable = R.drawable.wave_ps_above)
+        ProfileHeader(
+            navigateBack = {
+                navigateBack()
+            },
+            drawable = R.drawable.wave_ps_above
+        )
         FormField(
             identityField = stringResource(R.string.identity),
             changePasswordField = stringResource(R.string.change_password),
@@ -86,6 +91,7 @@ fun ProfileScreen(
 @Composable
 fun ProfileHeader(
     drawable: Int,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column {
@@ -97,6 +103,9 @@ fun ProfileHeader(
                 .padding(vertical = 4.dp, horizontal = 16.dp)
         ) {
             DefaultHeader(
+                navigateBack = {
+                    navigateBack()
+                },
                 textHeader = stringResource(R.string.profile_header),
                 color = Color.White,
             )

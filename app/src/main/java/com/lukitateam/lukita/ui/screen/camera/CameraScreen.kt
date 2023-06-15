@@ -44,15 +44,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.lukitateam.lukita.data.response.ArtResponse
 import com.lukitateam.lukita.ui.common.UiState
 import com.lukitateam.lukita.ui.screen.camera.CameraViewModel
 import com.lukitateam.lukita.util.createFile
 import com.lukitateam.lukita.util.reduceFileImage
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
@@ -65,10 +66,13 @@ import kotlin.coroutines.suspendCoroutine
 @Composable
 fun CameraScreen(
     viewModel: CameraViewModel = viewModel(),
+    navController: NavController,
+    onNavigate: () -> Unit,
 ) {
     val shouldShowCamera = remember { mutableStateOf(false) }
-    var shouldShowPhoto by remember { mutableStateOf(false) }
     val context = LocalContext.current
+
+    var isResponseSuccess by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     val state = viewModel.predictState.collectAsState(initial = null)
@@ -93,34 +97,36 @@ fun CameraScreen(
         CameraView(
             executor = cameraExecutor,
             onImageCaptured = { file ->
-//                val reducedFile = reduceFileImage(file)
-                val image = file.asRequestBody("image/jpeg".toMediaType())
+                val reducedFile = reduceFileImage(file)
                 val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                     "file",
                     file.name,
-                    image
+                    reducedFile.asRequestBody("image/*".toMediaTypeOrNull())
                 )
 
                 scope.launch {
-                    Log.i("test", image.toString())
                     prediction = viewModel.predict(imageMultipart)
+
+                    when (val response = prediction) {
+                        is UiState.Success -> {
+                            navController.currentBackStackEntry?.savedStateHandle?.set(
+                                key = "artResponse",
+                                value = response.data
+                            )
+                            isResponseSuccess = true
+                        }
+
+                        is UiState.Error -> {
+                            val errorMessage = response.errorMessage
+                            Log.e("CameraScreen", errorMessage)
+                        }
+
+                        is UiState.Loading -> {
+                            Log.i("CameraScreen", "loading")
+                        }
+                    }
+
                 }
-
-                when (val response = prediction) {
-                    is UiState.Success -> {
-                        Log.i("CameraScreen", response.toString())
-                    }
-
-                    is UiState.Error -> {
-                        val errorMessage = response.errorMessage
-                        Log.e("CameraScreen", errorMessage)
-                    }
-
-                    UiState.Loading -> {
-                    }
-                }
-
-                shouldShowCamera.value = false
             },
             onError = { Log.e("Camera", "View error:", it) }
         )
@@ -129,18 +135,20 @@ fun CameraScreen(
 
     LaunchedEffect(key1 = state.value?.isError) {
         scope.launch {
-            if (state.value?.isError?.isNotEmpty() == true) {
-                val success = state.value?.isError
-                Log.e("error", success.toString())
-                Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
+            if (state.value?.isError?.isNotBlank() == true) {
+                val error = state.value?.isError
+                Toast.makeText(context, "$error", Toast.LENGTH_LONG).show()
             }
         }
     }
 
+    if (state.value?.isLoading == true) {
+        CircularProgressIndicator()
+    }
 
-    if (shouldShowPhoto) {
-        // Todo(Redirect ke Detail)
-        shouldShowPhoto = false
+    if (isResponseSuccess) {
+        onNavigate()
+        isResponseSuccess = false
     }
 
     DisposableEffect(Unit) {

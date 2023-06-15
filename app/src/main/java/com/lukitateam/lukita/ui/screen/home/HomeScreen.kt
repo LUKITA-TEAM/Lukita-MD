@@ -40,24 +40,12 @@ import kotlinx.coroutines.launch
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(),
 ) {
 
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
-    val state = viewModel.galleryState.collectAsState(initial = null)
 
     var galleryList by remember { mutableStateOf<UiState<List<GalleryResponse>>>(UiState.Loading) }
-
-    LaunchedEffect(key1 = state.value?.isSuccess) {
-        scope.launch {
-            if (state.value?.isSuccess?.isNotEmpty() == true) {
-                val success = state.value?.isSuccess
-                Toast.makeText(context, "$success", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
 
     scope.launch {
         galleryList = viewModel.getGallery()

@@ -48,33 +48,25 @@ fun LukitaApp(
     Scaffold(
         floatingActionButton = {
             when (currentRoute) {
-                (Screen.Splash.route) -> {}
-                (Screen.Login.route) -> {}
-                (Screen.Register.route) -> {}
-                (Screen.Profile.route) -> {}
-                (Screen.Detail.route) -> {}
-                else -> {
+                (Screen.Home.route) -> {
                     MultiFloatingButton(
                         multiFloatingState = multiFloatingState,
+                        navController = navController,
                         onMultiFabStateChange = {
                             multiFloatingState = it
                         },
                         items = items
                     )
                 }
+                else -> {}
             }
         },
         bottomBar = {
-            // jika route tidak menggunakan bottom bar matikan disini
             when (currentRoute) {
-                (Screen.Splash.route) -> {}
-                (Screen.Login.route) -> {}
-                (Screen.Register.route) -> {}
-                (Screen.Profile.route) -> {}
-                (Screen.Detail.route) -> {}
-                else -> {
+                (Screen.Home.route) -> {
                     BottomNav(navController)
                 }
+                else -> {}
             }
         },
         modifier = modifier

@@ -4,10 +4,16 @@ import CameraScreen
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.lukitateam.lukita.data.response.ArtResponse
+import com.lukitateam.lukita.ui.screen.detail.DetailScreen
 import com.lukitateam.lukita.ui.screen.home.HomeScreen
 import com.lukitateam.lukita.ui.screen.login.LoginScreen
 import com.lukitateam.lukita.ui.screen.profile.ProfileScreen
@@ -29,6 +35,26 @@ fun NavigationHost(
         startDestination = startDestination,
         modifier = modifier.padding(innerPadding)
     ) {
+        composable(Screen.Camera.route) {
+            CameraScreen(
+                navController = navController
+            ) {
+                navController.navigate(Screen.Detail.route)
+            }
+        }
+        composable(Screen.Detail.route) {
+            val state =
+                navController.previousBackStackEntry?.savedStateHandle?.get<ArtResponse>("artResponse")
+            if (state != null) {
+                DetailScreen(
+                    sharedState = state,
+                    navigateBack = {
+                        navController.popBackStack()
+                        navController.navigate(Screen.Home.route)
+                    }
+                )
+            }
+        }
         composable(Screen.Splash.route) {
             SplashScreen(
                 navController
@@ -56,11 +82,21 @@ fun NavigationHost(
         composable(Screen.Home.route) {
             HomeScreen()
         }
-        composable(Screen.Camera.route) {
-            CameraScreen()
-        }
         composable(Screen.Profile.route) {
-            ProfileScreen(navController = navController)
+            ProfileScreen(navController = navController, navigateBack = {
+
+            })
         }
     }
+}
+
+@Composable
+inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
+    navController: NavHostController,
+): T {
+    val navGraphRoute = destination.parent?.route ?: return viewModel()
+    val parentEntry = remember(this) {
+        navController.getBackStackEntry(navGraphRoute)
+    }
+    return viewModel(parentEntry)
 }
