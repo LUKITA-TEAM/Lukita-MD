@@ -32,7 +32,6 @@ import coil.compose.AsyncImage
 import com.lukitateam.lukita.R
 import com.lukitateam.lukita.data.response.ArtResponse
 import com.lukitateam.lukita.ui.components.DefaultHeader
-import com.lukitateam.lukita.ui.components.PhotoItem
 import com.lukitateam.lukita.ui.theme.Primary
 
 @Composable
@@ -71,7 +70,7 @@ fun Content(
         Box(
             contentAlignment = Alignment.BottomCenter,
             modifier = modifier
-                .width(360.dp)
+                .padding(horizontal = 16.dp)
         ) {
             AsyncImage(
                 model = filepath,
@@ -138,6 +137,7 @@ fun RelatedImage(
 @Composable
 fun PhotoGrid(
     data: List<String>,
+    modifier: Modifier = Modifier,
 ) {
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(2),
@@ -147,8 +147,13 @@ fun PhotoGrid(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(data) { img ->
-            PhotoItem(
-                type = "", photoUrl = img
+            AsyncImage(
+                model = img,
+                contentDescription = "",
+                contentScale = ContentScale.FillBounds,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp))
             )
         }
     }

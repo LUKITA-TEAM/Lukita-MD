@@ -11,3 +11,8 @@ fun validatePassword(text : String) : Boolean {
 fun comparingPassword(old : String, text : String) : Boolean {
     return old == text
 }
+fun extractNameFromEmail(email: String): String? {
+    val regex = "^([a-zA-Z]+)".toRegex()
+    val matchResult = regex.find(email)
+    return matchResult?.value
+}

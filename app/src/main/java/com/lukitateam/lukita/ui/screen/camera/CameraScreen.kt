@@ -108,7 +108,6 @@ fun CameraScreen(
 
                 scope.launch {
                     prediction = viewModel.predict(imageMultipart)
-                    Log.d("file", file.path)
 
                     when (val response = prediction) {
                         is UiState.Success -> {

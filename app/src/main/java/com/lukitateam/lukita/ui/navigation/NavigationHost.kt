@@ -44,6 +44,14 @@ fun NavigationHost(
                 }
             )
         }
+        composable(Screen.Home.route) {
+            HomeScreen(
+                navController = navController,
+                goToDetail = {
+                    navController.navigate(Screen.Detail.route)
+                }
+            )
+        }
         composable(Screen.Detail.route) {
             val state =
                 navController.previousBackStackEntry?.savedStateHandle?.get<ArtResponse>("artResponse")
@@ -88,9 +96,6 @@ fun NavigationHost(
         }
         composable(Screen.Welcome3.route) {
             WelcomeScreen3()
-        }
-        composable(Screen.Home.route) {
-            HomeScreen()
         }
         composable(Screen.Profile.route) {
             ProfileScreen(navController = navController, navigateBack = {
