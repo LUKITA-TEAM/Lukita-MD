@@ -1,7 +1,6 @@
 package com.lukitateam.lukita.ui.screen.detail
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,11 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.lukitateam.lukita.R
 import com.lukitateam.lukita.data.response.ArtResponse
 import com.lukitateam.lukita.ui.components.DefaultHeader
@@ -40,6 +39,7 @@ import com.lukitateam.lukita.ui.theme.Primary
 fun DetailScreen(
     modifier: Modifier = Modifier,
     sharedState: ArtResponse,
+    filepath: String,
     navigateBack: () -> Unit,
 ) {
 
@@ -53,7 +53,7 @@ fun DetailScreen(
             stringResource(R.string.detail_header),
             Color.Black
         )
-        Content(sharedState = sharedState)
+        Content(sharedState = sharedState, filepath = filepath)
         RelatedImage(listImage = sharedState.relatedImage)
     }
 }
@@ -62,6 +62,7 @@ fun DetailScreen(
 fun Content(
     modifier: Modifier = Modifier,
     sharedState: ArtResponse,
+    filepath: String,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -73,8 +74,8 @@ fun Content(
             modifier = modifier
                 .width(360.dp)
         ) {
-            Image(
-                painter = painterResource(R.drawable.example_image1),
+            AsyncImage(
+                model = filepath,
                 contentDescription = sharedState.prediction,
                 contentScale = ContentScale.Crop,
                 modifier = modifier

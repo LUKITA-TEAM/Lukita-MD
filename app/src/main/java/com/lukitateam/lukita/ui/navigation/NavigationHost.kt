@@ -47,9 +47,11 @@ fun NavigationHost(
         composable(Screen.Detail.route) {
             val state =
                 navController.previousBackStackEntry?.savedStateHandle?.get<ArtResponse>("artResponse")
-            if (state != null) {
+            val filepath = navController.previousBackStackEntry?.savedStateHandle?.get<String>("file")
+            if (state != null && filepath != null) {
                 DetailScreen(
                     sharedState = state,
+                    filepath = filepath,
                     navigateBack = {
                         navController.popBackStack()
                         navController.navigate(Screen.Home.route) {
