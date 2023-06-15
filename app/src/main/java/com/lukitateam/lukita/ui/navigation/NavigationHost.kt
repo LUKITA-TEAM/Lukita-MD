@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -37,10 +38,11 @@ fun NavigationHost(
     ) {
         composable(Screen.Camera.route) {
             CameraScreen(
-                navController = navController
-            ) {
-                navController.navigate(Screen.Detail.route)
-            }
+                navController = navController,
+                onNavigate = {
+                    navController.navigate(Screen.Detail.route)
+                }
+            )
         }
         composable(Screen.Detail.route) {
             val state =
@@ -50,7 +52,13 @@ fun NavigationHost(
                     sharedState = state,
                     navigateBack = {
                         navController.popBackStack()
-                        navController.navigate(Screen.Home.route)
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 )
             }
@@ -84,7 +92,14 @@ fun NavigationHost(
         }
         composable(Screen.Profile.route) {
             ProfileScreen(navController = navController, navigateBack = {
-
+                navController.popBackStack()
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
             })
         }
     }

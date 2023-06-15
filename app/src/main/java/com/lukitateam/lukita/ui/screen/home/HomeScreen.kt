@@ -44,8 +44,17 @@ fun HomeScreen(
 ) {
 
     val scope = rememberCoroutineScope()
+    val state = viewModel.galleryState.collectAsState(initial = null)
 
     var galleryList by remember { mutableStateOf<UiState<List<GalleryResponse>>>(UiState.Loading) }
+
+    LaunchedEffect(key1 = state.value?.isSuccess) {
+        scope.launch {
+            if (state.value?.isSuccess?.isNotEmpty() == true) {
+                val success = state.value?.isSuccess
+            }
+        }
+    }
 
     scope.launch {
         galleryList = viewModel.getGallery()
@@ -53,7 +62,7 @@ fun HomeScreen(
 
     Column {
         HomeHeader(
-            username = "John",
+            username = "Coco",
             drawable = R.drawable.wave_homescreen,
         )
 

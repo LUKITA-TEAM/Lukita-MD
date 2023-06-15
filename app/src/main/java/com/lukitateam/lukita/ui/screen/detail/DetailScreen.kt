@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +40,8 @@ fun DetailScreen(
 ) {
 
     Column(
+        modifier.fillMaxWidth()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         DefaultHeader(
@@ -76,7 +81,8 @@ fun Content(
             )
             Box(
                 modifier = modifier
-                    .fillMaxHeight(),
+                    .fillMaxHeight()
+                    .clip(RoundedCornerShape(8.dp)),
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Text(
@@ -85,12 +91,11 @@ fun Content(
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     textAlign = TextAlign.Center,
+
                     modifier = modifier
                         .width(275.dp)
                         .height(55.dp)
                         .background(Primary)
-                        .clip(RoundedCornerShape(20.dp)),
-
                     )
             }
         }
@@ -98,7 +103,7 @@ fun Content(
             text = sharedState.explanation,
             style = MaterialTheme.typography.bodyLarge,
             modifier = modifier
-                .padding(vertical = 32.dp, horizontal = 8.dp),
+                .padding(vertical = 32.dp, horizontal = 16.dp),
         )
         RelatedImage()
     }
