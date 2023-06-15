@@ -96,7 +96,7 @@ fun MultiFloatingButton(
                                 navController.navigate(Screen.Camera.route)
                             }
                             "Gallery" -> {
-                                openGalleryLauncher.launch("image/jpg")
+                                openGalleryLauncher.launch("image/*")
                             }
                             else -> {}
                         }
