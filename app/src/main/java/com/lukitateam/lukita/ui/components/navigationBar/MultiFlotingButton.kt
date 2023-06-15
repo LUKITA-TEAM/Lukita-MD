@@ -1,6 +1,11 @@
 package com.lukitateam.lukita.ui.components.navigationBar
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
@@ -20,6 +25,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -39,6 +46,16 @@ enum class MultiFloatingState {
     Collapsed,
 }
 
+//val galleryLauncher = rememberLauncherForActivityResult(
+//    contract = ActivityResultContracts.GetContent(),
+//    onResult = { result ->
+//        if (result != null) {
+//            val selectedImageUri: Uri = result
+//            // Handle the selected image URI
+//        }
+//    }
+//)
+
 @Composable
 fun MultiFloatingButton(
     multiFloatingState: MultiFloatingState,
@@ -54,6 +71,17 @@ fun MultiFloatingButton(
         if (it == MultiFloatingState.Expanded) 315f else 0f
     }
 
+    val context = LocalContext.current
+    val selectedImages = remember { mutableStateListOf<Uri>() }
+
+    val openGalleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetMultipleContents(),
+        onResult = { uris ->
+            selectedImages.clear()
+            selectedImages.addAll(uris)
+        }
+    )
+
     Column(
         horizontalAlignment = Alignment.End
     ) {
@@ -68,7 +96,7 @@ fun MultiFloatingButton(
                                 navController.navigate(Screen.Camera.route)
                             }
                             "Gallery" -> {
-                                // TODO (INTENT TO GALERY)
+                                openGalleryLauncher.launch("image/jpg")
                             }
                             else -> {}
                         }
