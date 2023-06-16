@@ -9,7 +9,7 @@ LukitaMobile is a mobile app that allows you to scan an image to product a predi
 
 ## Installation
 
-To install LukitaMobile, you need to have Android 5.0 or higher. You can download the app from the Google Play Store or from the GitHub Releases page.
+To install LukitaMobile, you need to have Android 9.0 or higher. You can download the app from the GitHub Releases page.
 
 ## Usage
 
