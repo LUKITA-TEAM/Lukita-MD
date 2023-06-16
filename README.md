@@ -2,7 +2,7 @@
 
 LukitaMobile is a mobile app that allows you to scan an image to product a prediction about the art movement.
 
-## Team ID	: C22-PS168 (The Rising Star)
+## Team
 
 - (ML) M306DSX0220 – Fadhil Wicaksono Nur Rahman – Universitas Pembangunan Nasional “Veteran” Yogyakarta- [Active]
 - (ML) M169DSY0144 – Ardelia Saphira Wedo Putri – University of Gadjah Mada - [Active]
